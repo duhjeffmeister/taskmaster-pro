@@ -68,9 +68,24 @@ $(".card .list-group").sortable({
     console.log("out", this);
   },
   update: function(event) {
-    console.log("update",this);
-    }
-  });
+  // array to store the task dat in
+  var tempArr = [];
+
+    // loop over current set of children in sortable list
+    $(this).children().each(function() {
+      var text = $(this)
+        .find("p")
+        .text()
+        .trim();
+
+      var date = $(this)
+        .find("span")
+        .text()
+        .trim();
+    })
+    console.log(tempArr);
+  }
+});
 //click listener for event description <p> elements. Added to all elements with the .list-group class, so it can monitor for clicks in <p> elements inside 
 //the list columns as the <p> elements are created
 $(".list-group").on("click", "p", function () {
@@ -192,6 +207,32 @@ $(".list-group").on("blur", "input[type='text']", function () {
 
   //replace input with span
   $(this).replaceWith(taskSpan);
+});
+
+// droppable jQuery widget
+$("#trash").droppable({
+  // controls which draggable elements are acecepted by the droppable. can be a selector or function.
+  accept: ".card .list-group-item",
+
+  // specifies which mode to use for testing whether a draggable is hovering over a droppable
+  // touch  refers to draggable overlapping the droppable by any amount
+  tolerance: "touch",
+
+  //event that is triggered when an accepted draggable is dropped on the droppable (based on the tolerance option)
+  drop: function(event, ui) {
+    ui.draggable.remove();
+    console.log("drop");
+  },
+  
+  //triggered when an accepted draggable is dragged over the droppable (based on the tolerance option)
+  over: function(event, ui) {
+    console.log("over");
+  },
+
+  //triggered when an accepted draggable is dragged out of hte droppable (based on the tolerance option)
+  out: function(event, ui) {
+    console.log("out");
+  }
 });
 
 
